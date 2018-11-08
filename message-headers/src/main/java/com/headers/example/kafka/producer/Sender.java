@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,25 +40,6 @@ public class Sender {
         ProducerRecord<String, Bar> bar = new ProducerRecord(topicBar, 0, "111", new Bar(data), headers);
         LOG.info("sending BAR message='{}' to topic='{}'", data, topicBar);
         kafkaTemplate.send(bar);
-
-//        // this part doesn't work for me :(
-//        Message<Bar> message = MessageBuilder
-//                .withPayload(new Bar(data + "_suffix"))
-//                .setHeader(KafkaHeaders.TOPIC, topicFoo)
-//                .setHeader(KafkaHeaders.MESSAGE_KEY, "999")
-//                .setHeader(KafkaHeaders.PARTITION_ID, 0)
-//                .setHeader("X-Custom-Header", "Sending Custom Header with Spring Kafka")
-//                .build();
-//        kafkaTemplate.send(message);
-////        Message<String> message = MessageBuilder
-//////                .withPayload(new Bar(data + "_suffix"))
-////                .withPayload(data + "_suffix")
-////                .setHeader(KafkaHeaders.TOPIC, topicFoo)
-////                .setHeader(KafkaHeaders.MESSAGE_KEY, "999")
-////                .setHeader(KafkaHeaders.PARTITION_ID, 0)
-////                .setHeader("X-Custom-Header", "Sending Custom Header with Spring Kafka")
-////                .build();
-////        kafkaTemplate.send(message);
     }
 
     public void sendFoo(String data) {
@@ -65,5 +49,17 @@ public class Sender {
         ProducerRecord<String, Foo> foo = new ProducerRecord(topicBar, 0, "111", new Foo(data), headers);
         LOG.info("sending FOO message='{}' to topic='{}'", data, topicBar);
         kafkaTemplate.send(foo);
+    }
+
+    public void sendFooInDifferentWay(String data) {
+        Message<Foo> message = MessageBuilder
+                .withPayload(new Foo(data + "_suffix"))
+                .setHeader(KafkaHeaders.TOPIC, topicBar)
+                .setHeader(KafkaHeaders.MESSAGE_KEY, "999")
+                .setHeader(KafkaHeaders.PARTITION_ID, 0)
+                .setHeader("X-Custom-Header", "Sending Custom Header with Spring Kafka".getBytes())
+                .setHeader("X-CLASS-TYPE", "foo".getBytes())
+                .build();
+        kafkaTemplate.send(message);
     }
 }

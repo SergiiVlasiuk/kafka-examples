@@ -21,5 +21,6 @@ public class SpringKafkaApplication implements CommandLineRunner {
         String data = "Spring Kafka Custom Header Example";
         sender.sendFoo(data);
         sender.sendBar(data);
+        sender.sendFooInDifferentWay(data);
     }
 }
