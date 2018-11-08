@@ -1,15 +1,15 @@
 package com.headers.example.kafka.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.headers.example.kafka.data.Bar;
+import com.headers.example.kafka.data.AbstractEvent;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class BarSerializer implements Serializer<Bar> {
+public class AbstractEventSerializer implements Serializer<AbstractEvent> {
 
 	@Override
-	public byte[] serialize(String arg0, Bar developer) {
+	public byte[] serialize(String arg0, AbstractEvent developer) {
 		byte[] serializedBytes = null;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {

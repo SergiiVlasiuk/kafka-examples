@@ -6,6 +6,3 @@ on java part.
 
     docker-compose up -d
 
-## How to fix test?
-
-Test should pass because of using BarSerializer, but it doesn't

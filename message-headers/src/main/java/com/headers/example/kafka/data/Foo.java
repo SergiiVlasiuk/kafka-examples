@@ -1,12 +1,12 @@
 package com.headers.example.kafka.data;
 
-public class Bar extends AbstractEvent {
+public class Foo extends AbstractEvent {
 
     private String name;
 
-    public Bar(){}
+    public Foo(){}
 
-    public Bar(String name) {
+    public Foo(String name) {
         this.name = name;
     }
 
@@ -20,7 +20,7 @@ public class Bar extends AbstractEvent {
 
     @Override
     public String toString() {
-        return "Bar{" +
+        return "Foo{" +
                 "name='" + name + '\'' +
                 '}';
     }

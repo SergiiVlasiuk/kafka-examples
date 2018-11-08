@@ -1,6 +1,8 @@
 package com.headers.example.kafka.consumer;
 
 import com.headers.example.kafka.data.Bar;
+import com.headers.example.kafka.data.Foo;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaHandler;
@@ -10,35 +12,41 @@ import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
-@KafkaListener(topics = "${app.topic.bar}")
+@KafkaListener(topics = "${app.topic.bar}", id = "multi")
 public class Listener {
-
-    private static final Logger LOG = LoggerFactory.getLogger(Listener.class);
 
     @KafkaHandler
     public void receive(@Payload Bar data,
                         @Headers MessageHeaders messageHeaders) {
+        log.info("- - - - - - - - - - - - - - - receive BAR object - - - - - - - - - - - - - - -");
+        log.info("received message='{}'", data);
+        logHeaders(messageHeaders);
+    }
 
-        LOG.info("- - - - - - - - - - - - - - -");
-        LOG.info("[receiveBar][bar]received message='{}'", data);
-        messageHeaders.keySet().forEach(key -> {
-            Object value = messageHeaders.get(key);
-                LOG.info("{}: {}", key, value);
-        });
-
+    @KafkaHandler
+    public void receive(@Payload Foo data,
+                        @Headers MessageHeaders messageHeaders) {
+        log.info("- - - - - - - - - - - - - - - receive FOO object - - - - - - - - - - - - - - -");
+        log.info("received message='{}'", data);
+        logHeaders(messageHeaders);
     }
 
     @KafkaHandler(isDefault = true)
     public void receiveString(@Payload String data,
                         @Headers MessageHeaders messageHeaders) {
+        log.info("- - - - - - - - - - - - - - - receive String object - - - - - - - - - - - - - - -");
+        log.info("received message='{}'", data);
+        logHeaders(messageHeaders);
+    }
 
-        LOG.info("- - - - - - - - - - - - - - -");
-        LOG.info("[receiveString][bar]received message='{}'", data);
+    private void logHeaders(@Headers MessageHeaders messageHeaders) {
+        log.info("- - - - - - - - - - - - - - - HEADERS - - - - - - - - - - - - - - -");
         messageHeaders.keySet().forEach(key -> {
             Object value = messageHeaders.get(key);
-                LOG.info("{}: {}", key, value);
+            log.info("{}: {}", key, value);
         });
-
     }
+
 }

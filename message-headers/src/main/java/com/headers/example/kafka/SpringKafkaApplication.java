@@ -19,7 +19,7 @@ public class SpringKafkaApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         String data = "Spring Kafka Custom Header Example";
-//        sender.sendFoo(data);
+        sender.sendFoo(data);
         sender.sendBar(data);
     }
 }

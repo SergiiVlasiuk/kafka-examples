@@ -1,8 +1,7 @@
 package com.headers.example.kafka;
 
-import com.headers.example.kafka.consumer.ListenerD;
+import com.headers.example.kafka.consumer.Listener;
 import com.headers.example.kafka.producer.Sender;
-import org.apache.kafka.common.errors.SerializationException;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,14 +22,19 @@ public class SpringKafkaApplicationTest {
     public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, FOO_TOPIC);
 
     @Autowired
-    private ListenerD listener;
+    private Listener listener;
 
     @Autowired
     private Sender sender;
 
-    @Test(expected = SerializationException.class)
-    public void testReceive() {
-        sender.sendBar("Hello Spring Kafka!");
+    @Test
+    public void testSendingBar() {
+        sender.sendBar("Hello Spring Kafka! Bar object.");
+    }
+
+    @Test
+    public void testSendingFoo() {
+        sender.sendFoo("Hello Spring Kafka! Foo object.");
     }
 
 }

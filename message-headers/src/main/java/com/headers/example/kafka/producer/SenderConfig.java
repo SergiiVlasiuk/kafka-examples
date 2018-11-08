@@ -1,7 +1,8 @@
 package com.headers.example.kafka.producer;
 
 import com.headers.example.kafka.data.Bar;
-import com.headers.example.kafka.serializer.BarSerializer;
+import com.headers.example.kafka.data.Foo;
+import com.headers.example.kafka.serializer.AbstractEventSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +26,11 @@ public class SenderConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-//        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-//        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, BarSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, BarSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AbstractEventSerializer.class);
+        Map<String, Class> map = new HashMap<>();
+        map.put("bar", Bar.class);
+        map.put("foo", Foo.class);
+        props.put("mappers", map);
         return props;
     }
 
