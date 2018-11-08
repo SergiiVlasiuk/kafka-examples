@@ -3,8 +3,6 @@ package com.headers.example.kafka.consumer;
 import com.headers.example.kafka.data.Bar;
 import com.headers.example.kafka.data.Foo;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.MessageHeaders;
@@ -35,7 +33,7 @@ public class Listener {
 
     @KafkaHandler(isDefault = true)
     public void receiveString(@Payload String data,
-                        @Headers MessageHeaders messageHeaders) {
+                              @Headers MessageHeaders messageHeaders) {
         log.info("- - - - - - - - - - - - - - - receive String object - - - - - - - - - - - - - - -");
         log.info("received message='{}'", data);
         logHeaders(messageHeaders);

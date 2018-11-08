@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class Sender {
     @Value("${app.topic.bar}")
     private String topicBar;
 
-    public void sendBar(String data){
+    public void sendBar(String data) {
 
         List<Header> headers = new ArrayList();
         headers.add(new RecordHeader("X-Custom-Header", "Sending Custom Header with Spring Kafka example".getBytes()));
@@ -61,7 +58,7 @@ public class Sender {
 ////        kafkaTemplate.send(message);
     }
 
-    public void sendFoo(String data){
+    public void sendFoo(String data) {
         List<Header> headers = new ArrayList();
         headers = new ArrayList<>();
         headers.add(new RecordHeader("X-CLASS-TYPE", "foo".getBytes()));

@@ -9,12 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringKafkaApplication implements CommandLineRunner {
 
+    @Autowired
+    private Sender sender;
+
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaApplication.class, args);
     }
-
-    @Autowired
-    private Sender sender;
 
     @Override
     public void run(String... strings) throws Exception {

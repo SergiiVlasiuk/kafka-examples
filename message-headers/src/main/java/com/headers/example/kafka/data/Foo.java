@@ -4,7 +4,8 @@ public class Foo extends AbstractEvent {
 
     private String name;
 
-    public Foo(){}
+    public Foo() {
+    }
 
     public Foo(String name) {
         this.name = name;

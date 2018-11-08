@@ -1,8 +1,8 @@
 package com.headers.example.kafka.consumer;
 
+import com.headers.example.kafka.data.Bar;
 import com.headers.example.kafka.data.Foo;
 import com.headers.example.kafka.serializer.AbstractEventDeserializer;
-import com.headers.example.kafka.data.Bar;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +54,7 @@ public class ListenerConfig {
     }
 
     @Bean
-    public DefaultKafkaHeaderMapper headerMapper(){
+    public DefaultKafkaHeaderMapper headerMapper() {
         return new DefaultKafkaHeaderMapper();
     }
 
