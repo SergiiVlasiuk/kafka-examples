@@ -1,6 +1,6 @@
-# Example of serialize|deserialize configuration via properties.
+# Example of multi serialize|deserialize configuration via properties.
 
-on java part.
+Configuration is on java part.
 
 ## kafka starts in docker-compose
 
