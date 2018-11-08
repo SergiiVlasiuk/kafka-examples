@@ -1,6 +1,6 @@
 package com.headers.example.kafka.data;
 
-public class Bar extends AbstractEvent {
+public class Bar implements AbstractEvent {
 
     private String name;
 

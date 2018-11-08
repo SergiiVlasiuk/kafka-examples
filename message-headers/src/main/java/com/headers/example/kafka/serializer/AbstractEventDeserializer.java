@@ -1,6 +1,5 @@
 package com.headers.example.kafka.serializer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.headers.example.kafka.data.AbstractEvent;
 import com.headers.example.kafka.data.Bar;
 import lombok.extern.slf4j.Slf4j;
@@ -16,15 +15,15 @@ import java.util.stream.StreamSupport;
 import static com.headers.example.kafka.utils.ObjectMapperUtil.parseFromJson;
 
 @Slf4j
-public class AbstractEventDeserializer<T extends AbstractEvent> implements ExtendedDeserializer<T> {
+public class AbstractEventDeserializer implements ExtendedDeserializer<AbstractEvent> {
 
-    private Map<String, Class<T>> mappers = new HashMap<>();
+    private Map<String, Class<AbstractEvent>> mappers = new HashMap<>();
 
     @Override
-    public T deserialize(String arg0, byte[] devBytes) {
-        T bar = null;
+    public AbstractEvent deserialize(String arg0, byte[] devBytes) {
+        AbstractEvent bar = null;
         try {
-            bar = (T) parseFromJson(devBytes, Bar.class);
+            bar = parseFromJson(devBytes, Bar.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,7 +36,7 @@ public class AbstractEventDeserializer<T extends AbstractEvent> implements Exten
     }
 
     @Override
-    public T deserialize(String topic, Headers headers, byte[] data) {
+    public AbstractEvent deserialize(String topic, Headers headers, byte[] data) {
         log.info("handling...");
         headers.forEach(header -> log.info("   {}: {}", header.key(), getHeaderValueAsString(header)));
         Optional<String> classTypeFromHeader = getClassTypeFromHeader(headers);
@@ -64,7 +63,7 @@ public class AbstractEventDeserializer<T extends AbstractEvent> implements Exten
     public void configure(Map<String, ?> arg0, boolean arg1) {
         log.info("configs ===================");
         if (arg0.containsKey("mappers")) {
-            this.mappers = (Map<String, Class<T>>) arg0.get("mappers");
+            this.mappers = (Map<String, Class<AbstractEvent>>) arg0.get("mappers");
         }
         arg0.keySet().forEach(key -> log.info("   {}:{}", key, arg0.get(key)));
     }
